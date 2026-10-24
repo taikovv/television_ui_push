@@ -1,0 +1,114 @@
+/* vladimirtaikov.com on a TV. Three colours, one weight, one column. Sized for
+   a 1920x1080 panel read from the sofa. Only transform and colour change, so
+   it stays cheap on the TV's web engine. Orange marks the focused line only. */
+
+/* Helvetica can't be shipped; TeX Gyre Heros is a free clone of it. */
+@font-face {
+  font-family: "Heros";
+  src: url("fonts/texgyreheros-bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+:root {
+  --bg: #fff;
+  --ink: #2f2f2f;
+  --black: #000;
+  --orange: #ff7700;
+  --edge: 64px;
+  --col: 1240px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+/* After dark: same system, lights off. Automatic from 8pm to 7am. */
+.night {
+  --bg: #0a0a0a;
+  --ink: #9a9a9a;
+  --black: #f4f4f4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+
+body {
+  font-family: "Heros", Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+}
+
+#stage {
+  position: absolute; left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  background: var(--bg);
+  color: var(--ink);
+  transition: background .6s, color .6s;
+}
+
+/* One column, scrolled as a page so the focused line stays near the middle. */
+
+.page {
+  position: absolute; top: 0; left: 50%;
+  width: var(--col); margin-left: -620px;
+  padding-top: 168px; padding-bottom: 220px;
+  transition: transform .42s var(--ease);
+}
+
+h1 {
+  color: var(--black);
+  font-size: 92px; line-height: 1.06; letter-spacing: -.025em;
+  text-align: justify;
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: var(--ink);
+  font-size: 24px; line-height: 1.2;
+  margin: 64px 0 12px;
+}
+
+.item {
+  position: relative;
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 4px 0;
+}
+.item .name {
+  color: var(--black);
+  font-size: 76px; line-height: 1.12; letter-spacing: -.025em;
+  transition: color .15s;
+}
+.item .arrow {
+  position: absolute; right: 100%; margin-right: 28px; top: 4px;
+  color: var(--orange);
+  font-size: 76px; line-height: 1.12;
+  opacity: 0; transform: translateX(-24px);
+  transition: opacity .2s var(--ease), transform .25s var(--ease);
+}
+.item.missing .name { color: var(--ink); }
+.item.focus .name { color: var(--orange); }
+.item.focus .arrow { opacity: 1; transform: none; }
+
+.project-note {
+  max-width: 1000px; margin-top: 72px;
+  font-size: 28px; line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #stage, .page, .item .name, .item .arrow, .stamp { transition: none; }
+}
+
+/* Bottom stamp: key hints, plus a line of feedback after OK. Does not scroll. */
+
+.stamp {
+  position: absolute; left: var(--edge); right: var(--edge); bottom: 0;
+  display: flex; justify-content: space-between;
+  padding: 20px 0 36px;
+  font-size: 22px; line-height: 1.4;
+  background: var(--bg);
+  transition: background .6s;
+}
+.footer-status { max-width: 1120px; }
+#casting-status { display: block; font-size: 20px; }
+#said { display: block; }
+#said:empty { display: none; }

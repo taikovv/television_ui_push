@@ -1,0 +1,21 @@
+# Device state, credentials, local SDKs, recovery evidence and build outputs
+.local/
+dist/
+*.p12
+*.pfx
+*.pem
+*.key
+*.password
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+
+# Private session notes and device-specific setup instructions
+HANDOFF.md
+PLAN.md
+PRIVACY_PLAN.md
+certificate-request.md

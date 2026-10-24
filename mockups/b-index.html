@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>Home · Index</title>
+<style>
+/* Option B: vladimirtaikov.com on a TV. Three colours, one weight, one column,
+   corner stamps at the edges. Sized for a 1920x1080 panel read from the sofa.
+   Only transform and colour change, so it stays cheap on the TV's engine. */
+
+:root {
+  --bg: #fff;
+  --ink: #2f2f2f;
+  --black: #000;
+  --orange: #ff7700;
+  --edge: 64px;
+  --stamp: 22px;
+  --col: 1240px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+/* After dark: same system, lights off. Auto from 8pm to 7am, or press N. */
+.night {
+  --bg: #0a0a0a;
+  --ink: #9a9a9a;
+  --black: #f4f4f4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+
+body {
+  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+}
+
+#stage {
+  position: absolute; left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  background: var(--bg);
+  color: var(--ink);
+  transition: background .6s, color .6s;
+}
+
+/* Bottom stamp: key hints, plus a line of feedback after OK. It does not
+   scroll. Orange is kept for the focused line only. */
+
+.stamp {
+  position: absolute; left: var(--edge); right: var(--edge);
+  display: flex; justify-content: space-between; gap: 48px;
+  font-size: var(--stamp); line-height: 1.4;
+  background: var(--bg);
+  z-index: 2;
+  transition: background .6s;
+}
+.stamp.bottom { bottom: 0; padding-top: 20px; padding-bottom: 36px; }
+
+/* One column, scrolled as a page so the focused line stays near the middle. */
+
+.page {
+  position: absolute; top: 0; left: 50%;
+  width: var(--col); margin-left: calc(var(--col) / -2);
+  padding-top: 168px; padding-bottom: 220px;
+  transition: transform .42s var(--ease);
+}
+
+h1 {
+  color: var(--black);
+  font-size: 92px; line-height: 1.06; letter-spacing: -.025em;
+  text-align: justify;
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: var(--ink);
+  font-size: 24px; line-height: 1.2;
+  margin: 64px 0 12px;
+}
+
+.item {
+  position: relative;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 40px;
+  padding: 4px 0;
+}
+.item .name {
+  color: var(--black);
+  font-size: 76px; line-height: 1.12; letter-spacing: -.025em;
+  transition: color .15s;
+}
+.item .what {
+  font-size: 26px; text-align: right; white-space: nowrap;
+  transition: color .15s;
+}
+.item .arrow {
+  position: absolute; right: 100%; margin-right: 28px; top: 4px;
+  color: var(--orange);
+  font-size: 76px; line-height: 1.12;
+  opacity: 0; transform: translateX(-24px);
+  transition: opacity .2s var(--ease), transform .25s var(--ease);
+}
+.item.focus .name { color: var(--orange); }
+.item.focus .what { color: var(--black); }
+.item.focus .arrow { opacity: 1; transform: none; }
+
+.note { font-size: 26px; line-height: 1.5; margin-top: 72px; max-width: 980px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="page" id="page">
+    <h1>a quiet screen for watching, listening and casting.*</h1>
+    <div id="list"></div>
+    <p class="note">* no ads, no rows of things you didn’t ask for. airplay and screen mirroring are always on; nothing to open. samsung’s old home is at the bottom if you ever miss it.</p>
+  </div>
+
+  <div class="stamp bottom">
+    <span id="said"></span>
+    <span>↑ ↓ choose &nbsp; ok open &nbsp; back top</span>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var LIST = [
+    { group: 'watch', items: [
+      ['netflix', 'Netflix', 'films, series'],
+      ['hulu', 'Hulu', 'series'],
+      ['paramount', 'Paramount+', 'live sport, films'],
+      ['youtube', 'YouTube', 'everything else'],
+      ['max', 'Max', 'hbo'],
+      ['appletv', 'Apple TV', 'apple originals'],
+      ['prime', 'Prime Video', 'films, series'],
+      ['disney', 'Disney+', 'disney, pixar, marvel']
+    ]},
+    { group: 'listen', items: [
+      ['spotify', 'Spotify', 'music, podcasts']
+    ]},
+    { group: 'cast', items: [
+      ['airplay', 'AirPlay', 'always on'],
+      ['mirror', 'Screen Mirror', 'android, windows']
+    ]},
+    { group: 'inputs', items: [
+      ['hdmi1', 'HDMI 1', 'input']
+    ]},
+    { group: 'system', items: [
+      ['settings', 'Settings', 'picture, sound, network'],
+      ['samsung', 'Samsung Home', 'the old screen']
+    ]}
+  ];
+
+  var stage = document.getElementById('stage');
+  var page = document.getElementById('page');
+  var said = document.getElementById('said');
+  var rows = [], flat = [], at = 0;
+
+  function build() {
+    var html = '';
+    for (var g = 0; g < LIST.length; g++) {
+      html += '<h2>' + LIST[g].group + '</h2>';
+      for (var i = 0; i < LIST[g].items.length; i++) {
+        var it = LIST[g].items[i];
+        flat.push(it);
+        html += '<div class="item"><span class="arrow">→</span><span class="name">' + it[1].toLowerCase() + '</span><span class="what">' + it[2] + '</span></div>';
+      }
+    }
+    document.getElementById('list').innerHTML = html;
+    rows = document.querySelectorAll('.item');
+  }
+
+  // Keep the focused line near the middle; never scroll above the headline.
+  function render() {
+    for (var i = 0; i < rows.length; i++) rows[i].className = 'item' + (i === at ? ' focus' : '');
+    var row = rows[at];
+    var max = page.offsetHeight - 1080;
+    var y = row.offsetTop + row.offsetHeight / 2 - 560;
+    y = Math.max(0, Math.min(y, max));
+    page.style.transform = 'translateY(' + -y + 'px)';
+  }
+
+  var sayTimer;
+  function say(text) {
+    said.textContent = text;
+    clearTimeout(sayTimer);
+    sayTimer = setTimeout(function () { said.textContent = ''; }, 2800);
+  }
+
+  function open() {
+    var it = flat[at];
+    if (it[0] === 'airplay') say('airplay is always on. on your mac: control center → screen mirroring → this tv.');
+    else say('preview. on the tv this opens ' + it[1].toLowerCase() + '.');
+  }
+
+  document.addEventListener('keydown', function (e) {
+    var k = e.keyCode;
+    if (k === 38 && at > 0) at--;
+    else if (k === 40 && at < rows.length - 1) at++;
+    else if (k === 13) open();
+    else if (k === 10009 || k === 27 || k === 8) at = 0;
+    else if (k === 78) stage.className = stage.className ? '' : 'night';
+    else return;
+    e.preventDefault();
+    render();
+  });
+
+  document.getElementById('list').addEventListener('click', function (e) {
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i].contains(e.target)) {
+        if (i === at) open(); else { at = i; render(); }
+        return;
+      }
+    }
+  });
+
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var x = (window.innerWidth - 1920 * s) / 2, y = (window.innerHeight - 1080 * s) / 2;
+    stage.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+
+  var hour = new Date().getHours();
+  if (hour >= 20 || hour < 7) stage.className = 'night';
+  if (/[?&]night=0/.test(location.search)) stage.className = '';
+
+  build();
+  render();
+  fit();
+  window.addEventListener('resize', fit);
+}());
+</script>
+</body>
+</html>

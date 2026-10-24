@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- No <access> element: Tizen denies every network origin by default, so the
+     launcher cannot reach the internet. tools/build.mjs fails if one appears. -->
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://vladimirtaikov.com/tv-home" version="0.3.8" viewmodes="maximized">
+  <tizen:application id="WGuqy2ffiw.Home" package="WGuqy2ffiw" required_version="6.5"/>
+  <content src="index.html"/>
+  <name>home</name>
+  <icon src="icon.png"/>
+  <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+  <tizen:profile name="tv-samsung"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.info"/>
+  <tizen:privilege name="http://tizen.org/privilege/tv.window"/>
+  <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+</widget>
