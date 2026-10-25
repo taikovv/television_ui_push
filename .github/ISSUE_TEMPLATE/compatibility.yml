@@ -1,0 +1,33 @@
+name: TV compatibility report
+description: Share what you physically tested on a Samsung Tizen TV.
+title: '[Compatibility] Model / Tizen version'
+body:
+  - type: markdown
+    attributes:
+      value: 'Do not share DUIDs, local IP addresses, certificates, passwords, account data, or raw private logs. A successful browser preview is not a TV compatibility test.'
+  - type: input
+    id: model
+    attributes:
+      label: Model and region
+      placeholder: UN55CU7000FXZA / US
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Tizen version and exact firmware
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Project version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: What did you test, and what happened?
+      description: Include installation, app launch, input discovery/switching, volume/mute, and startup only where physically tested. Say what remains untested. Do not bypass native helper guards.
+    validations:
+      required: true

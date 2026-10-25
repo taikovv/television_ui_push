@@ -17,7 +17,7 @@ This plan does not promise that an online Samsung TV or third-party streaming ap
 | Item | Evidence / constraint |
 | --- | --- |
 | Hardware | UN55CU7000FXZA; firmware T-KSU2ECAKUC-0080-2024.2; Tizen 8, ARM32 |
-| Build | Samsung-signed v0.3.8, app ID WGuqy2ffiw.Home, installed and launched |
+| Build | Samsung-signed v0.4.1, app ID WGuqy2ffiw.Home, installed and launched |
 | Home | User physically confirmed Home from Netflix returns to our launcher; turning the TV off and on also returns to the launcher (one observed cycle, not a confirmed mains-disconnected cold boot) |
 | Launcher privacy | Bundled fonts and offline appearance calculation; build checks reject network origins and request APIs. This describes our bundle, not Samsung's OS or other apps |
 | Promotional panel | User observed Spotlight and featured gaming videos in Samsung QuickPanel. Its shortcut was removed from our launcher |

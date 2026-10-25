@@ -17,12 +17,14 @@ Restore verifies all five settings and the native Home operation against
 the original snapshot. Firmware guards apply to restore too: review before
 updating the TV firmware. Keep Developer Mode enabled for recovery.
 
-The recovery archive contains an independent tv-home-recovery/ directory.
-Extract it, cd into that directory and run the restore command above.
+If you created a private recovery archive, extract it and change into its
+project directory before running the restore command above. The public
+repository does not contain your recovery snapshot or an archive.
 It uses ~/tizen-studio/tools/sdb and .local/tv.json; update the IP if DHCP
 changes it. It does not need the Microsoft SDK or signing passwords.
 
-This is an unsupported non-root method, explicitly authorized by the user.
+This is an unsupported non-root method. See docs/HOME_ROUTING.md for setup
+and recovery requirements before applying it to a supported TV.
 It uses the reviewed SDK package-name command-execution workaround with
 one-shot scripts. There is no resident helper or security-policy change.
 

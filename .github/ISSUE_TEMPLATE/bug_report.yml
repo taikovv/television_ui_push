@@ -1,0 +1,30 @@
+name: Bug report
+description: Report an installation or launcher problem.
+title: '[Bug] '
+body:
+  - type: markdown
+    attributes:
+      value: 'Redact certificates, passwords, DUIDs, local addresses, account data, and private probe logs. For security issues, use the private reporting link in SECURITY.md.'
+  - type: input
+    id: environment
+    attributes:
+      label: TV model, Tizen version, firmware, and project version
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: errors
+    attributes:
+      label: Redacted error or screenshot
+      description: Share only the relevant error. Never attach your .local directory or signing files.
