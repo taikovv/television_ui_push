@@ -1,4 +1,4 @@
-# Contributing to [office_equipment]
+# Contributing to Still
 
 Thanks for helping make shared TVs quieter and more useful. The most valuable contributions are tested compatibility reports, reliable app/input discovery, accessibility improvements, and clear installation instructions.
 

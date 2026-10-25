@@ -1,4 +1,4 @@
-# [office_equipment] — make the TV a tool
+# Still — make the TV a tool
 
 Written 2026-10-24. Implementation status: user enabled the sale/sharing opt-out and reports all reviewed optional privacy controls off. User also confirmed turning the TV off and on returns to the launcher. Exact consent states have not been independently read back; network measurement/filtering remains deferred.
 
