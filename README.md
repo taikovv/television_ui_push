@@ -4,7 +4,11 @@ A quiet home screen for a communal Samsung TV: music, films, whatever someone pl
 
 ## Current build
 
-Version 0.3.8. Spotify comes first, missing apps stay hidden, and connected external inputs are discovered at runtime. The launcher uses bundled fonts and assets, with no analytics or network requests. Appearance offers auto/light/dark; auto calculates San Francisco daylight locally.
+Source version 0.3.9 (signed and tested; TV deployment pending connectivity). Spotify comes first, missing apps stay hidden, and connected external inputs are discovered at runtime. The launcher uses bundled fonts and assets, with no analytics or network requests. Appearance offers auto/light/dark; auto calculates San Francisco daylight locally.
+
+The launcher now has a CRT-style loading screen: the same bundled Heros font, pale phosphor glow, static scanlines and an indeterminate segmented activity bar. It clears when initial app/input discovery and font loading settle; it adds no minimum wait and does not replay on foreground return. Back exits early, and a five-second timeout exposes the menu if discovery stalls. Reduced-motion mode keeps the visual treatment without animation. This is app startup UI, not a replacement for Samsung’s firmware boot logo.
+
+![CRT loading screen](docs/crt-loading.png)
 
 The custom Home button route and a power-off/on return to the launcher have been physically confirmed on a Samsung UN55CU7000FXZA running Tizen 8. HDMI switching and real casting sessions still need physical validation. Casting component detection in the footer is not a receiver health check.
 
@@ -17,7 +21,7 @@ node --test tools/appearance.test.mjs tools/library.test.mjs
 node tools/build.mjs
 ```
 
-Builds use Tizen Studio at `~/tizen-studio`; output goes to ignored `dist/`. The browser regression script `tools/check-browser.cjs` additionally requires Playwright and Google Chrome. No Node dependencies are required for the logic tests.
+Builds use Tizen Studio at `~/tizen-studio`; output goes to ignored `dist/`. The browser regression script `tools/check-browser.cjs` and the loading-state script `tools/check-loading.cjs` require Playwright and Google Chrome. No Node dependencies are required for the logic tests.
 
 ## Install on a TV
 

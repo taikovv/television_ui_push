@@ -14,6 +14,7 @@ const path=require('node:path');
   });
   await page.goto(pathToFileURL(path.resolve(__dirname,'../app/index.html')).href);
   await page.waitForFunction(()=>document.querySelectorAll('.item').length===5);
+  await page.waitForFunction(()=>!document.body.classList.contains('loading'));
   assert.equal(await page.locator('.focus .name').textContent(),'spotify');
   assert.equal(await page.locator('.name').allTextContents().then(x=>x.includes('max')),false);
   await page.keyboard.press('Enter');

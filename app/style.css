@@ -19,7 +19,7 @@
   --ease: cubic-bezier(.2, .8, .2, 1);
 }
 
-/* After dark: same system, lights off. Automatic from 8pm to 7am. */
+/* After dark: same system, lights off. Auto follows San Francisco daylight. */
 .night {
   --bg: #0a0a0a;
   --ink: #9a9a9a;
@@ -112,3 +112,53 @@ h2 {
 #casting-status { display: block; font-size: 20px; }
 #said { display: block; }
 #said:empty { display: none; }
+
+/* Phosphor-style startup, using the same bundled type as the menu.
+   Static glow/scanlines; only the activity signal's transform is animated. */
+.loading .page, .loading .stamp { visibility: hidden; }
+#boot {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  color: #edf5f5; background: #080b0b;
+  opacity: 1; transition: opacity .18s ease-out;
+}
+#boot::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 25%, rgba(0, 0, 0, .72) 100%);
+}
+#boot::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .2) 2px, rgba(0, 0, 0, .2) 4px);
+}
+#boot.leaving { opacity: 0; pointer-events: none; }
+#boot[hidden] { display: none; }
+.crt-content { width: 640px; text-align: center; }
+.crt-title {
+  font-size: 112px; line-height: 1; letter-spacing: -.025em;
+  text-shadow: 0 0 2px #fff, 0 0 12px rgba(208, 242, 246, .55), 0 0 36px rgba(186, 226, 232, .22);
+}
+.crt-dot { color: inherit; }
+.crt-bar {
+  position: relative; height: 28px; margin: 44px 0 32px;
+  border: 2px solid rgba(227, 241, 242, .7); overflow: hidden;
+  box-shadow: 0 0 8px rgba(208, 242, 246, .18), inset 0 0 8px rgba(208, 242, 246, .1);
+}
+.crt-bar::after {
+  content: ""; position: absolute; inset: 4px;
+  background: repeating-linear-gradient(to right, rgba(227, 241, 242, .13) 0, rgba(227, 241, 242, .13) 20px, transparent 20px, transparent 26px);
+}
+.crt-signal {
+  position: absolute; top: 4px; bottom: 4px; left: -208px; width: 208px;
+  background: repeating-linear-gradient(to right, #e3f1f2 0, #e3f1f2 20px, transparent 20px, transparent 26px);
+  box-shadow: 0 0 10px rgba(208, 242, 246, .25);
+  animation: crt-travel 1.8s linear infinite;
+}
+.crt-label {
+  font-size: 22px; line-height: 1.4; letter-spacing: .02em;
+  color: #96aaaa; text-shadow: 0 0 6px rgba(208, 242, 246, .2);
+}
+@keyframes crt-travel { to { transform: translateX(848px); } }
+@media (prefers-reduced-motion: reduce) {
+  #boot { transition: none; }
+  .crt-signal { animation: none; left: 4px; }
+}

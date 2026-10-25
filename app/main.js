@@ -10,6 +10,24 @@
   var castingStatus = document.getElementById('casting-status');
   var flat = [], rows = [], at = 0;
   var apps = null, sources = [], selected = null;
+  var boot = document.getElementById('boot');
+  var starting = true, appsReady = false, inputsReady = false, fontReady = false;
+  var bootTimer, fontTimer;
+
+  function finishBoot(force) {
+    if (!starting || (!force && !(appsReady && inputsReady && fontReady))) return;
+    starting = false;
+    clearTimeout(bootTimer);
+    clearTimeout(fontTimer);
+    build();
+    document.body.className = '';
+    boot.className = 'leaving';
+    boot.setAttribute('aria-hidden', 'true');
+    setTimeout(function () { boot.hidden = true; }, 200);
+    if (Device.onTv() && apps === null) say('could not read apps. samsung home is available below.');
+  }
+
+  function fontLoaded() { fontReady = true; finishBoot(false); }
 
   function build() {
     var focus = flat[at] ? Library.key(flat[at]) : selected;
@@ -103,19 +121,28 @@
       var status = Library.castingStatus(list, !Device.onTv());
       if (castingStatus.textContent !== status) castingStatus.textContent = status;
       if (list !== null) { apps = list; build(); }
-      else if (Device.onTv() && apps === null) say('could not read installed apps. reopen home to retry.');
+      else if (Device.onTv() && apps === null && !starting) say('could not read installed apps. reopen home to retry.');
+      appsReady = true;
+      finishBoot(false);
     });
     Device.inputs(function (list) {
       if (list !== null) {
         sources = list;
         if (apps !== null || !Device.onTv()) build();
       }
+      inputsReady = true;
+      finishBoot(false);
     });
   }
 
   // Left/right and OK choose appearance. N cycles it in a keyboard preview.
   document.addEventListener('keydown', function (e) {
     var k = e.keyCode;
+    if (starting) {
+      if (k === 10009 || k === 27 || k === 8) finishBoot(true);
+      e.preventDefault();
+      return;
+    }
     if (k === 38) { if (at > 0) at--; }
     else if (k === 40) { if (at < flat.length - 1) at++; }
     else if (k === 10009 || k === 27 || k === 8) at = 0;
@@ -131,6 +158,7 @@
   });
 
   document.getElementById('list').addEventListener('click', function (e) {
+    if (starting) return;
     for (var i = 0; i < rows.length; i++) {
       if (rows[i].contains(e.target)) {
         if (i === at) open(); else { at = i; paint(); remember(); }
@@ -154,6 +182,14 @@
 
   recall();
   night();
+  // A stalled discovery cannot trap the TV on a loading screen. Back exits too.
+  bootTimer = setTimeout(function () { finishBoot(true); }, 5000);
+  fontTimer = setTimeout(fontLoaded, 1200);
+  try {
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('700 112px Heros').then(fontLoaded, fontLoaded);
+    } else fontLoaded();
+  } catch (e) { fontLoaded(); }
   // On the TV, wait for discovery before drawing apps; never flash placeholders.
   if (!Device.onTv()) build();
   refresh();

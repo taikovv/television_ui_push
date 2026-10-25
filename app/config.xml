@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- No <access> element: Tizen denies every network origin by default, so the
      launcher cannot reach the internet. tools/build.mjs fails if one appears. -->
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://vladimirtaikov.com/tv-home" version="0.3.8" viewmodes="maximized">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://vladimirtaikov.com/tv-home" version="0.3.9" viewmodes="maximized">
   <tizen:application id="WGuqy2ffiw.Home" package="WGuqy2ffiw" required_version="6.5"/>
   <content src="index.html"/>
   <name>home</name>
