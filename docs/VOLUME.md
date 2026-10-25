@@ -32,3 +32,7 @@ A further read-only symbol/path inspection found mute-specific native banner han
 
 - [Samsung TVAudioControl API](https://developer.samsung.com/smarttv/develop/api-references/tizen-web-device-api-references/tvaudiocontrol-api.html)
 - [Samsung remote-control key registration](https://developer.samsung.com/smarttv/develop/guides/user-interaction/remote-control.html)
+
+## Audio-output detection follow-up
+
+A later read-only investigation successfully read the selected native speaker route as SDK UID 901. Samsung reads receiver names separately, and a receiver name was present while TV speakers were selected. See [audio-output investigation](AUDIO_OUTPUT.md) for the exact mechanism, live result, probe and remaining native-to-web bridge work. No dynamic source label is deployed.

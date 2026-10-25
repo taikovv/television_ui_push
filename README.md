@@ -10,7 +10,7 @@ The launcher now has a CRT-style loading screen: the same bundled Heros font, pa
 
 ![CRT loading screen](docs/crt-loading.png)
 
-The foreground-only volume OSD uses the same font with orange CRT glow, 24 segments and dots for the remaining range. It reads TV volume and mute through the public audio API, registers volume keys only while our launcher is visible, and dismisses after 2.2 seconds. Other apps and HDMI keep Samsung's own controls. The bar is centered horizontally near the bottom. User confirmed our mute display responds, while Samsung’s own mute indicator still appears. Global/native mute-indicator suppression remains unresolved. See [volume investigation](docs/VOLUME.md).
+The foreground-only volume OSD uses the same font with orange CRT glow, 24 segments and dots for the remaining range. It reads TV volume and mute through the public audio API, registers volume keys only while our launcher is visible, and dismisses after 2.2 seconds. Other apps and HDMI keep Samsung's own controls. The bar is centered horizontally near the bottom. User confirmed our mute display responds, while Samsung’s own mute indicator still appears. Global/native mute-indicator suppression remains unresolved. See [volume investigation](docs/VOLUME.md) and the [verified native audio-output detection path](docs/AUDIO_OUTPUT.md).
 
 ![Orange CRT volume bar — simulated TV preview](docs/crt-volume.png)
 
