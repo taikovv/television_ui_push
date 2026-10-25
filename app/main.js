@@ -21,6 +21,7 @@
     clearTimeout(fontTimer);
     build();
     document.body.className = '';
+    Volume.start();
     boot.className = 'leaving';
     boot.setAttribute('aria-hidden', 'true');
     setTimeout(function () { boot.hidden = true; }, 200);
@@ -138,6 +139,7 @@
   // Left/right and OK choose appearance. N cycles it in a keyboard preview.
   document.addEventListener('keydown', function (e) {
     var k = e.keyCode;
+    if (Volume.handle(e)) { e.preventDefault(); return; }
     if (starting) {
       if (k === 10009 || k === 27 || k === 8) finishBoot(true);
       e.preventDefault();
@@ -165,6 +167,10 @@
         return;
       }
     }
+  });
+
+  document.getElementById('volume-osd').addEventListener('volume-unavailable', function () {
+    say('volume unavailable here. try the remote again for samsung controls.');
   });
 
   // Apps may have been installed or removed while we were in the background.

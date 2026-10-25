@@ -21,6 +21,11 @@
     <p class="project-note">[office_equipment] music. films. whatever someone plugs in. a shared screen with less noise. a little sidequest, made here, for everyone here.</p>
   </div>
 
+  <div id="volume-osd" hidden role="status" aria-live="polite">
+    <div class="volume-heading"><span id="volume-label">volume</span><span id="volume-value"></span></div>
+    <div id="volume-meter" aria-hidden="true"></div>
+  </div>
+
   <div class="stamp">
     <div class="footer-status">
       <span id="casting-status">airplay + screen mirroring: checking</span>
@@ -34,6 +39,7 @@
 <script src="device.js"></script>
 <script src="library.js"></script>
 <script src="appearance.js"></script>
+<script src="volume.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

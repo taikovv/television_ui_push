@@ -22,7 +22,7 @@ const APP = join(ROOT, 'app');
 const DIST = join(ROOT, 'dist');
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const TIZEN = join(homedir(), 'tizen-studio', 'tools', 'ide', 'bin', 'tizen');
-const PRIVILEGES = ['application.launch', 'application.info', 'tv.window'];
+const PRIVILEGES = ['application.launch', 'application.info', 'tv.window', 'tv.inputdevice'];
 const NETWORK = /https?:\/\/|\bfetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|EventSource|importScripts/;
 
 const problems = [];

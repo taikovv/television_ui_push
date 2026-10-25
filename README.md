@@ -4,11 +4,15 @@ A quiet home screen for a communal Samsung TV: music, films, whatever someone pl
 
 ## Current build
 
-Source version 0.3.9 (signed and tested; TV deployment pending connectivity). Spotify comes first, missing apps stay hidden, and connected external inputs are discovered at runtime. The launcher uses bundled fonts and assets, with no analytics or network requests. Appearance offers auto/light/dark; auto calculates San Francisco daylight locally.
+Version 0.4.0, signed, installed and launched on the TV. Physical remote-volume feedback is pending. Spotify comes first, missing apps stay hidden, and connected external inputs are discovered at runtime. The launcher uses bundled fonts and assets, with no analytics or network requests. Appearance offers auto/light/dark; auto calculates San Francisco daylight locally.
 
 The launcher now has a CRT-style loading screen: the same bundled Heros font, pale phosphor glow, static scanlines and an indeterminate segmented activity bar. It clears when initial app/input discovery and font loading settle; it adds no minimum wait and does not replay on foreground return. Back exits early, and a five-second timeout exposes the menu if discovery stalls. Reduced-motion mode keeps the visual treatment without animation. This is app startup UI, not a replacement for Samsung’s firmware boot logo.
 
 ![CRT loading screen](docs/crt-loading.png)
+
+The foreground-only volume OSD uses the same font with orange CRT glow, 24 segments and dots for the remaining range. It reads TV volume and mute through the public audio API, registers volume keys only while our launcher is visible, and dismisses after 2.2 seconds. Other apps and HDMI keep Samsung's own controls. Physical confirmation of key routing, audio response and whether the native panel also appears is pending. See [volume investigation](docs/VOLUME.md).
+
+![Orange CRT volume bar — simulated TV preview](docs/crt-volume.png)
 
 The custom Home button route and a power-off/on return to the launcher have been physically confirmed on a Samsung UN55CU7000FXZA running Tizen 8. HDMI switching and real casting sessions still need physical validation. Casting component detection in the footer is not a receiver health check.
 
@@ -21,7 +25,7 @@ node --test tools/appearance.test.mjs tools/library.test.mjs
 node tools/build.mjs
 ```
 
-Builds use Tizen Studio at `~/tizen-studio`; output goes to ignored `dist/`. The browser regression script `tools/check-browser.cjs` and the loading-state script `tools/check-loading.cjs` require Playwright and Google Chrome. No Node dependencies are required for the logic tests.
+Builds use Tizen Studio at `~/tizen-studio`; output goes to ignored `dist/`. The browser regression script `tools/check-browser.cjs`, the loading-state script `tools/check-loading.cjs` and volume script `tools/check-volume.cjs` require Playwright and Google Chrome. No Node dependencies are required for the logic tests.
 
 ## Install on a TV
 

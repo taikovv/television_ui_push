@@ -162,3 +162,27 @@ h2 {
   #boot { transition: none; }
   .crt-signal { animation: none; left: 4px; }
 }
+
+/* Foreground volume only: bars become dots as the level falls. */
+#volume-osd {
+  position: absolute; z-index: 9; left: var(--edge); bottom: 144px;
+  width: 960px; padding: 32px 40px 36px;
+  background: #080a08; color: var(--orange);
+  box-shadow: 0 0 0 1px rgba(255, 119, 0, .08);
+  pointer-events: none;
+}
+#volume-osd[hidden] { display: none; }
+#volume-osd::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .17) 2px, rgba(0, 0, 0, .17) 4px);
+}
+.volume-heading {
+  display: flex; align-items: baseline; justify-content: space-between;
+  font-size: 48px; line-height: 1.1; margin-bottom: 18px;
+  text-shadow: 0 0 3px rgba(255, 119, 0, .7), 0 0 16px rgba(255, 119, 0, .35);
+}
+#volume-value { font-size: 36px; }
+#volume-meter { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.volume-step { display: flex; align-items: center; justify-content: center; width: 24px; height: 52px; }
+.volume-step i { display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); opacity: .5; }
+.volume-step.lit i { width: 22px; height: 52px; border-radius: 0; opacity: 1; box-shadow: 0 0 8px rgba(255, 119, 0, .45); }

@@ -11,4 +11,12 @@ for base in /usr/apps /opt/usr/apps; do
     find "$folder" -maxdepth 3 -type f 2>/dev/null | head -30
   done
 done
+printf 'VOLUME_BINARY_INTERFACES\n'
+if command -v strings >/dev/null 2>&1; then
+  strings /usr/apps/org.tizen.volume-app/bin/volume-app | grep -Ei 'vconf|volume.*(show|hide|osd|theme)|osd|theme|\.edj|\.png|db/menu/|org\..*(volume|audio)' | head -70 || true
+fi
+printf 'VOLUME_PACKAGE_METADATA\n'
+for f in /usr/share/packages/org.tizen.volume-app.xml /usr/share/packages/org.tizen.volume-setting.xml; do
+  if test -r "$f"; then sed -n '1,90p' "$f"; fi
+done
 printf 'TVHOME_END\n'
