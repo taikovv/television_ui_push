@@ -2,6 +2,8 @@
 
 Written 2026-10-24. Implementation status: user enabled the sale/sharing opt-out and reports all reviewed optional privacy controls off. User also confirmed turning the TV off and on returns to the launcher. Exact consent states have not been independently read back; network measurement/filtering remains deferred.
 
+Latest evidence: [read-only privacy audit, 2026-10-25](PRIVACY_AUDIT.md). Limit Ad Tracking and its underlying advertising opt-out were independently read successfully; zero tracking is not established.
+
 ## Intended result
 
 Power on, choose music, films or a connected input, use it, leave. No recommendation feed in our home screen. Reduce Samsung's viewing recognition, advertising identifiers and optional data collection across the TV, including when using HDMI. Preserve native streaming, casting, audio, inputs, maintenance and a recoverable route to Samsung settings.

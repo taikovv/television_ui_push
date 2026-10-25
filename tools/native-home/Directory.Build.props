@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
-    <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' != 'AudioProbe'">$(MSBuildThisFileDirectory)../../.local/native-home/obj/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' != 'AudioProbe' and '$(MSBuildProjectName)' != 'PrivacyProbe'">$(MSBuildThisFileDirectory)../../.local/native-home/obj/</BaseIntermediateOutputPath>
     <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' == 'AudioProbe'">$(MSBuildThisFileDirectory)../../.local/native-home/audio-obj/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' == 'PrivacyProbe'">$(MSBuildThisFileDirectory)../../.local/native-home/privacy-obj/</BaseIntermediateOutputPath>
   </PropertyGroup>
 </Project>

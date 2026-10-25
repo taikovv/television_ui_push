@@ -57,7 +57,7 @@ Home/startup behavior is firmware-specific. Keep the tested Home autostart confi
 
 ## Privacy work
 
-See [the privacy plan](docs/PRIVACY.md). Optional TV privacy consents were reported disabled by the user; traffic measurement and filtering are deferred. Native streaming, casting and HDMI remain requirements. The launcher does not remove ads or recommendations inside third-party apps, and no claim of zero OS tracking is made.
+See [the privacy plan](docs/PRIVACY.md) and [the live TV audit](docs/PRIVACY_AUDIT.md). Optional TV privacy consents were reported disabled by the user; traffic measurement and filtering are deferred. Native streaming, casting and HDMI remain requirements. The launcher does not remove ads or recommendations inside third-party apps, and no claim of zero OS tracking is made.
 
 ## Repository contents
 

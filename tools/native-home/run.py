@@ -22,8 +22,8 @@ REMOTE = '/home/owner/share/tmp/sdk_tools'
 
 def main():
     mode = sys.argv[1] if len(sys.argv) == 2 else 'inspect'
-    if mode not in ('inspect', 'inspect-volume', 'inspect-audio', 'audio-query', 'query', 'apply', 'restore'):
-        raise RuntimeError('Use inspect, inspect-volume, inspect-audio, audio-query, query, apply or restore')
+    if mode not in ('inspect', 'inspect-volume', 'inspect-audio', 'inspect-privacy', 'inspect-privacy-lib', 'audio-query', 'privacy-query', 'query', 'apply', 'restore'):
+        raise RuntimeError('Use inspect, inspect-volume, inspect-audio, inspect-privacy, inspect-privacy-lib, audio-query, privacy-query, query, apply or restore')
     script = Path(__file__).with_name(mode + '.sh')
     if not script.exists():
         raise RuntimeError('This action has not been prepared')
@@ -49,9 +49,13 @@ def main():
         raise RuntimeError('TV platform/architecture differs; review required')
     if run(['-s', serial, 'shell', '0', 'getduid']).stdout.strip() != expected_duid:
         raise RuntimeError('Wrong TV; nothing staged')
-    if mode not in ('inspect', 'inspect-volume', 'inspect-audio'):
+    if mode not in ('inspect', 'inspect-volume', 'inspect-audio', 'inspect-privacy', 'inspect-privacy-lib'):
+        artifact_dir, artifact_name = {
+            'audio-query': ('audio-out', 'TvHomeAudioProbe'),
+            'privacy-query': ('privacy-out', 'TvHomePrivacyProbe'),
+        }.get(mode, ('out', 'TvHomeControl'))
         for suffix in ('dll', 'runtimeconfig.json', 'deps.json'):
-            source = PRIVATE / ('audio-out' if mode == 'audio-query' else 'out') / (('TvHomeAudioProbe.' if mode == 'audio-query' else 'TvHomeControl.') + suffix)
+            source = PRIVATE / artifact_dir / (artifact_name + '.' + suffix)
             if not source.exists():
                 raise RuntimeError('Compile the reviewed native helper first')
             run(['-s', serial, 'push', str(source), REMOTE + '/' + source.name])
