@@ -15,6 +15,13 @@ printf 'VOLUME_BINARY_INTERFACES\n'
 if command -v strings >/dev/null 2>&1; then
   strings /usr/apps/org.tizen.volume-app/bin/volume-app | grep -Ei 'vconf|volume.*(show|hide|osd|theme)|osd|theme|\.edj|\.png|db/menu/|org\..*(volume|audio)' | head -70 || true
 fi
+printf 'VOLUME_DISPLAY_KEYS\n'
+if test -r /usr/apps/org.tizen.volume-app/bin/volume-app; then
+  grep -aEo '(db|memory|file)/[A-Za-z0-9_./-]+' /usr/apps/org.tizen.volume-app/bin/volume-app | sort -u | head -100 || true
+  grep -aEo '(mute|volume|banner):(hide|show|mute|up|down|off|on)' /usr/apps/org.tizen.volume-app/bin/volume-app | sort -u || true
+else
+  printf 'SDK_BINARY_NOT_READABLE\n'
+fi
 printf 'VOLUME_PACKAGE_METADATA\n'
 for f in /usr/share/packages/org.tizen.volume-app.xml /usr/share/packages/org.tizen.volume-setting.xml; do
   if test -r "$f"; then sed -n '1,90p' "$f"; fi

@@ -4,7 +4,7 @@
 
 ## What is implemented
 
-Version 0.4.0 uses bundled Heros, orange #ff7700, static glow/scanlines, 24 bars which become dots as the level decreases, a numeric TV reading, mute state, and a 2.2-second dismissal. No new selectable menu or duplicate settings page.
+Version 0.4.1 uses bundled Heros, orange #ff7700, static glow/scanlines, 24 bars which become dots as the level decreases, a numeric TV reading, mute state, and a 2.2-second dismissal. No new selectable menu or duplicate settings page.
 
 On foreground entry, actual volume/mute readings must be valid before volume keys are registered. All three keys must register; partial registration is rolled back. Keys request one actual step or mute toggle, then read back the result. If control/readback fails, the OSD hides and key registrations are released. Backgrounding releases keys/listener/timer and clears the popup. Returning samples the current state without replaying an old popup. Volume events cover external level changes; a foreground-only 750ms poll covers mute changes, which have no audio-volume callback.
 
@@ -24,7 +24,9 @@ Private probe output remains under ignored `.local/native-home/`. No native comp
 
 Eight existing logic tests pass. Existing browser navigation/input and loading recovery tests pass. New simulated-TV browser checks cover one step per key, real API readback, mute, 0/100 boundaries, foreground/background cleanup, no stale popup, read failure, partial registration rollback, native fallback and dismissal. Preview was visually inspected.
 
-The signed 0.4.0 package installed and opened successfully. User remote test pending: up/down once each, mute; report orange only, native only or both; confirm audio remains normal. Global volume styling is unresolved, with no verified non-root implementation.
+The signed 0.4.1 package installed and opened successfully. User confirmed the custom bar says “muted,” while Samsung’s native mute popup also appears. This verifies custom key response/display, not native-panel suppression or every audio/output configuration. The bar was moved from the left to horizontal center near the bottom, with an exact geometry assertion in the browser check.
+
+A further read-only symbol/path inspection found mute-specific native banner handlers, a master-mute callback, and internal display-state keys. No semantics or independent suppression control was established, and no internal settings were written. One broad symbol read timed out; a bounded targeted path scan completed. SDB refused a direct binary pull; no binary was exported or published. Global volume styling and suppressing Samsung’s mute indicator remain unresolved, with no verified non-root implementation.
 
 ## Sources
 

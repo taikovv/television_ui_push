@@ -4,13 +4,13 @@ A quiet home screen for a communal Samsung TV: music, films, whatever someone pl
 
 ## Current build
 
-Version 0.4.0, signed, installed and launched on the TV. Physical remote-volume feedback is pending. Spotify comes first, missing apps stay hidden, and connected external inputs are discovered at runtime. The launcher uses bundled fonts and assets, with no analytics or network requests. Appearance offers auto/light/dark; auto calculates San Francisco daylight locally.
+Version 0.4.1, signed, installed and launched on the TV. User confirmed our mute display works, but Samsung’s mute indicator also appears. Spotify comes first, missing apps stay hidden, and connected external inputs are discovered at runtime. The launcher uses bundled fonts and assets, with no analytics or network requests. Appearance offers auto/light/dark; auto calculates San Francisco daylight locally.
 
 The launcher now has a CRT-style loading screen: the same bundled Heros font, pale phosphor glow, static scanlines and an indeterminate segmented activity bar. It clears when initial app/input discovery and font loading settle; it adds no minimum wait and does not replay on foreground return. Back exits early, and a five-second timeout exposes the menu if discovery stalls. Reduced-motion mode keeps the visual treatment without animation. This is app startup UI, not a replacement for Samsung’s firmware boot logo.
 
 ![CRT loading screen](docs/crt-loading.png)
 
-The foreground-only volume OSD uses the same font with orange CRT glow, 24 segments and dots for the remaining range. It reads TV volume and mute through the public audio API, registers volume keys only while our launcher is visible, and dismisses after 2.2 seconds. Other apps and HDMI keep Samsung's own controls. Physical confirmation of key routing, audio response and whether the native panel also appears is pending. See [volume investigation](docs/VOLUME.md).
+The foreground-only volume OSD uses the same font with orange CRT glow, 24 segments and dots for the remaining range. It reads TV volume and mute through the public audio API, registers volume keys only while our launcher is visible, and dismisses after 2.2 seconds. Other apps and HDMI keep Samsung's own controls. The bar is centered horizontally near the bottom. User confirmed our mute display responds, while Samsung’s own mute indicator still appears. Global/native mute-indicator suppression remains unresolved. See [volume investigation](docs/VOLUME.md).
 
 ![Orange CRT volume bar — simulated TV preview](docs/crt-volume.png)
 

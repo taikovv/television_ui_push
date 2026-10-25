@@ -24,6 +24,8 @@ const path=require('node:path');
   assert.equal(await page.evaluate(()=>fixture.calls),1,'one key changes volume exactly once');
   assert.equal(await page.locator('#volume-value').textContent(),'46');
   assert.equal(await page.locator('.volume-step.lit').count(),12);
+  const bounds=await page.locator('#volume-osd').boundingBox();
+  assert.ok(Math.abs(bounds.x+bounds.width/2-960)<1,'volume bar is horizontally centered');
   await page.screenshot({path:path.resolve(__dirname,'../.local/crt-volume-preview.png')});
   await key(449);assert.equal(await page.locator('#volume-label').textContent(),'muted');
   assert.equal(await page.locator('.volume-step.lit').count(),0);
