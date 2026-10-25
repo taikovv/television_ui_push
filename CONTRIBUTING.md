@@ -1,4 +1,4 @@
-# Contributing to Still
+# Contributing to UTILITY
 
 Thanks for helping make shared TVs quieter and more useful. The most valuable contributions are tested compatibility reports, reliable app/input discovery, accessibility improvements, and clear installation instructions.
 

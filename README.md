@@ -1,17 +1,18 @@
-# STILL
+# UTILITY
 
-### A peaceful interface for Samsung TVs.
+### a tv should be a tool.
 
 **A minimal custom launcher for Samsung Tizen smart TVs.** Music, films, and whatever someone plugs in. Built for a shared office TV, with a remote-first interface, local assets, and a little CRT glow.
 
-> music. films. whatever’s plugged in.
-> a shared screen with a little room to breathe.
+> turn it on. choose something.
+> no feed. no recommendations. no competition for your attention.
+> music, films, whatever’s plugged in.
 
 This is a developer-mode web app, not a firmware flash. Install it alongside your existing Samsung apps. Replacing the physical Home-button destination is a separate, experimental step with a much narrower compatibility range.
 
 [Setup](#install-on-your-tv) · [Compatibility](#compatibility) · [Customization](#make-it-yours) · [Privacy](#privacy) · [Contributing](CONTRIBUTING.md)
 
-![Still — a peaceful interface for Samsung TVs](docs/still-launcher.png)
+![UTILITY — a tv should be a tool](docs/utility-launcher.png)
 
 *Browser preview; app availability and device status depend on your TV.*
 
@@ -43,7 +44,7 @@ The volume display works on this home screen. Samsung's native mute indicator ca
 | --- | --- |
 | Tested hardware | Samsung UN55CU7000FXZA, 2023 Crystal UHD |
 | Tested software | Tizen 8.0; firmware `T-KSU2ECAKUC-0080-2024.2` |
-| Current source version | `0.4.2` (branding update); hardware behavior tested with `0.4.1` |
+| Current source version | `0.4.3` (branding update); hardware behavior tested with `0.4.1` |
 | Other Samsung Tizen TVs | Intended for further testing. Manifest minimum is Tizen 6.5; this is not a verified compatibility guarantee. App IDs and available APIs can vary by model, region, and firmware. |
 | Physical Home / startup routing | Confirmed on the tested TV only, using the optional native helper. Home from Netflix and a power-off/on cycle returned to the launcher. |
 | HDMI and casting | Connected-input discovery is implemented; actual HDMI switching and casting sessions still need physical validation. Footer component detection does not establish receiver readiness. |
@@ -131,12 +132,12 @@ node tools/build.mjs --sign tv-home
 node tools/install.mjs
 ```
 
-The build validates the bundle and signs it with your `tv-home` profile. The installer selects the newest signed `tv-home` package in `dist/`, installs it, and opens the app. The app appears as **still** on the TV.
+The build validates the bundle and signs it with your `tv-home` profile. The installer selects the newest signed `tv-home` package in `dist/`, installs it, and opens the app. The app appears as **utility** on the TV.
 
 To install a particular build, pass its path explicitly:
 
 ```sh
-node tools/install.mjs dist/home-0.4.2-tv-home.wgt
+node tools/install.mjs dist/home-0.4.3-tv-home.wgt
 ```
 
 **At this stage, physical Home still follows Samsung's normal behavior.** Standard app installation alone does not change the TV's Home routing.
@@ -154,7 +155,7 @@ Read [Home routing and recovery](docs/HOME_ROUTING.md) before considering it. Th
 | [`app/catalog.js`](app/catalog.js) | App order, labels, matching rules, and app IDs. Spotify is first by default. Missing catalog apps stay hidden. |
 | [`app/style.css`](app/style.css) | Layout, focus color, CRT treatment, and typography. |
 | [`app/appearance.js`](app/appearance.js) | Latitude and longitude for offline daylight mode. Defaults: `37.7749`, `-122.4194` (San Francisco). The TV clock must be correct. |
-| [`app/index.html`](app/index.html) | `Still` branding and the communal-screen note. |
+| [`app/index.html`](app/index.html) | `UTILITY` branding and the communal-screen note. |
 | [`app/volume.js`](app/volume.js) | Foreground volume display behavior. |
 
 App IDs in the catalog came from the tested TV. If an installed app is missing on another model, investigate its actual ID and matching rule; do not add fake availability. The footer's casting status describes detected components, not whether a casting session will succeed.
